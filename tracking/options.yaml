@@ -62,7 +62,7 @@ ft_layers: ['fc']
 
 # NetG
 lr_g: 0.0002
-maxiter_g: 70
+maxiter_g: 40
 batch_gnet: 32
 momentum: 0.9
 w_decay: 0.0005
