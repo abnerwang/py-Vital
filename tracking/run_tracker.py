@@ -173,9 +173,8 @@ def train(model, model_g, criterion, optimizer, pos_feats, neg_feats, maxiter, i
             loss_g_2.backward()
             optimizer_g.step()
 
-            objective = loss_g_2
             end = time.time()
-            print('asdn objective %.3f, %.2f s' % (objective, end - start))
+            print('asdn objective %.3f, %.2f s' % (loss_g_2, end - start))
 
 
 def run_vital(img_list, init_bbox, gt=None, savefig_dir='', display=False):
