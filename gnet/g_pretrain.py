@@ -14,14 +14,16 @@ opts = yaml.safe_load(open('./tracking/options.yaml','r'))
 def g_pretrain(model, model_g, criterion_g, pos_data):
     # Evaluate mask
     n = pos_data.size(0)
-    if n % opts['batchSize'] == 0:
-        nBatches = n / opts['batchSize']
+    if n % opts['batch_gnet'] == 0:
+        nBatches = n / opts['batch_gnet']
     else:
-        nBatches = n // opts['batchSize'] + 1
+        nBatches = n // opts['batch_gnet'] + 1
+
+    print(nBatches)
 
     pos_data = pos_data.view(n, 512, 3, 3)
 
-    score_all = t.zeros(n, 2)
+    prob = t.zeros(n)
     prob_k = t.zeros(9)
     for k in range(9):
         row = k // 3
@@ -29,18 +31,17 @@ def g_pretrain(model, model_g, criterion_g, pos_data):
 
         model.eval()
         for i in range(nBatches):
-            batch = pos_data[opts['batchSize'] * i:min(n, opts['batchSize'] * (i + 1))]
+            batch = pos_data[opts['batch_gnet'] * i:min(n, opts['batch_gnet'] * (i + 1)), :, :, :]
             batch[:, :, col, row] = 0
             batch = batch.view(batch.size(0), -1)
 
             if opts['use_gpu']:
                 batch = batch.cuda()
 
-            score = model(batch, in_layer='fc4')
-            score_all[opts['batchSize'] * i:min(n, opts['batchSize'] * (i + 1))] = score
+            score = model(batch, in_layer='fc4', out_layer='fc6_softmax')[:, 1]
+            prob[opts['batch_gnet'] * i:min(n, opts['batch_gnet'] * (i + 1))] = score
         model.train()
 
-        prob = F.softmax(score_all, dim=1)[:, 1]
         prob_k[k] = prob.sum()
 
     _, idx = t.min(prob_k, 0)
@@ -79,6 +80,6 @@ def g_pretrain(model, model_g, criterion_g, pos_data):
         loss_g.backward()
         optimizer.step()
 
-        objective[iter] = loss_g / batch_pos
+        objective[iter] = loss_g
         end = time.time()
         print('asdn objective %.3f, %.2f s' % (objective.mean(), end - start))

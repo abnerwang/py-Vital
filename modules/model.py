@@ -153,7 +153,9 @@ class BCELoss(nn.Module):
         neg_loss_p = (torch.ones(neg_loss.size()).cuda() - F.softmax(neg_score, dim=1)[:,0]) * neg_loss
 
         loss = pos_loss_p.sum() + neg_loss_p.sum()
+        # loss = pos_loss.sum() + neg_loss.sum()
         if average:
+            # loss /= (pos_loss.size(0) + neg_loss.size(0))
             loss /= (pos_loss_p.size(0) + neg_loss_p.size(0))
         return loss
 

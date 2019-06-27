@@ -8,7 +8,7 @@ def gen_config(args):
     if args.seq != '':
         # generate config from a sequence name
 
-        seq_home = './datasets/OTB'
+        seq_home = '/home/xpwang/datasets/OTB100'
         result_home = './results'
 
         seq_name = args.seq

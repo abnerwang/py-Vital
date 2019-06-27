@@ -35,7 +35,7 @@ scale_bbreg: 1.6
 aspect_bbreg: 1.1
 
 # initial training
-lr_init: 0.0005
+lr_init: 0.005
 maxiter_init: 50
 n_pos_init: 500
 n_neg_init: 5000
@@ -43,7 +43,7 @@ overlap_pos_init: [0.7, 1]
 overlap_neg_init: [0, 0.5]
 
 # online training
-lr_update: 0.001
+lr_update: 0.0005
 maxiter_update: 15
 n_pos_update: 50
 n_neg_update: 200
@@ -61,8 +61,8 @@ lr_mult: {'fc6': 10}
 ft_layers: ['fc']
 
 # NetG
-lr_g: 0.005
-batchSize: 128
-maxiter_g: 150
+lr_g: 0.0002
+maxiter_g: 70
+batch_gnet: 32
 momentum: 0.9
 w_decay: 0.0005

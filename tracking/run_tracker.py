@@ -150,10 +150,9 @@ def train(model, model_g, criterion, optimizer, pos_feats, neg_feats, maxiter, i
                 if opts['use_gpu']:
                     batch = batch.cuda()
 
-                score = model(batch, in_layer='fc4')
+                prob = model(batch, in_layer='fc4', out_layer='fc6_softmax')[:, 1]
                 model.train()
 
-                prob = F.softmax(score, dim=1)[:, 1]
                 prob_k[k] = prob.sum()
 
             _, idx = torch.min(prob_k, 0)
@@ -168,13 +167,13 @@ def train(model, model_g, criterion, optimizer, pos_feats, neg_feats, maxiter, i
             batch_pos_feats = batch_pos_feats.view(batch_pos_feats.size(0), -1)
             res = model_g(batch_pos_feats)
             labels = labels.view(batch_pos, -1)
-            criterion_g = torch.nn.MSELoss(reduction='sum')
+            criterion_g = torch.nn.MSELoss(reduction='mean')
             loss_g_2 = criterion_g(res.float(), labels.cuda().float())
             model_g.zero_grad()
             loss_g_2.backward()
             optimizer_g.step()
 
-            objective = loss_g_2 / batch_pos
+            objective = loss_g_2
             end = time.time()
             print('asdn objective %.3f, %.2f s' % (objective, end - start))
 
@@ -201,7 +200,7 @@ def run_vital(img_list, init_bbox, gt=None, savefig_dir='', display=False):
 
     # Init criterion and optimizer 
     criterion = BCELoss()
-    criterion_g = torch.nn.MSELoss(reduction='sum')
+    criterion_g = torch.nn.MSELoss(reduction='mean')
     model.set_learnable_params(opts['ft_layers'])
     model_g.set_learnable_params(opts['ft_layers'])
     init_optimizer = set_optimizer(model, opts['lr_init'], opts['lr_mult'])

@@ -7,17 +7,23 @@ seq_home = 'datasets/VOT'
 seqlist_path = 'datasets/list/vot-otb.txt'
 output_path = 'pretrain/data/vot-otb.pkl'
 
+def listdir_nohidden(path):
+    for f in os.listdir(path):
+        if not f.startswith('.'):
+            yield f
+
 with open(seqlist_path,'r') as fp:
     seq_list = fp.read().splitlines()
 
 # Construct db
 data = OrderedDict()
 for i, seq in enumerate(seq_list):
-    img_list = sorted([p for p in os.listdir(os.path.join(seq_home, seq)) if os.path.splitext(p)[1] == '.jpg'])
+    img_list = sorted([p for p in listdir_nohidden(os.path.join(seq_home, seq)) if os.path.splitext(p)[1] == '.jpg'])
     gt = np.loadtxt(os.path.join(seq_home, seq, 'groundtruth.txt'), delimiter=',')
 
     if seq == 'vot2014/ball':
         img_list = img_list[1:]
+        gt = gt[1:]
 
     assert len(img_list) == len(gt), "Lengths do not match!!"
 

@@ -11,6 +11,7 @@ sys.path.insert(0,'.')
 from data_prov import RegionDataset
 from modules.model import MDNet, set_optimizer, BCELoss, Precision
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 def train_mdnet(opts):
 
