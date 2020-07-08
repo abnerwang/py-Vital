@@ -5,7 +5,7 @@ Python (PyTorch) implementation of VITAL tracker. VITAL is a great tracker inven
 
 ### [[Project]](https://ybsong00.github.io/cvpr18_tracking/index.html) [[Paper]](https://arxiv.org/pdf/1804.04273.pdf) [[Matlab code]](https://github.com/ybsong00/Vital_release)  
 
-If you want this code for personal use, please cite:  
+If you want this code for personal use, please cite:   
 
     @InProceedings{nam2016mdnet,
     author = {Nam, Hyeonseob and Han, Bohyung},
@@ -13,10 +13,8 @@ If you want this code for personal use, please cite:
     booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
     month = {June},
     year = {2016}
-    }   
-
-
-​      
+    }  
+    
     @inproceedings{song-cvpr18-VITAL,
     author = {Song, Yibing and Ma, Chao and Wu, Xiaohe and Gong, Lijun and Bao, Linchao and Zuo, Wangmeng and Shen, Chunhua and Lau, Rynson and Yang, Ming-Hsuan}, 
     title = {VITAL: VIsual Tracking via Adversarial Learning}, 
