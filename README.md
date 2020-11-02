@@ -1,7 +1,7 @@
 # py-VITAL
 by [Xiaoping Wang](http://blog.keeplearning.group/about/).  
 ## Introduction
-Python (PyTorch) implementation of VITAL tracker. VITAL is a great tracker invented by Song, Yibing and Ma, Chao and et al. This implementation is based on [py-MDNet](https://github.com/HyeonseobNam/py-MDNet), that is implemented by Hyeonseob Nam and Bohyung Han. Thanks to all of them.  
+Python (PyTorch) implementation of VITAL tracker. VITAL is a great tracker invented by Song, Yibing and Ma, Chao and et al. This implementation is based on [py-MDNet](https://github.com/HyeonseobNam/py-MDNet), it is implemented by Hyeonseob Nam and Bohyung Han. Thanks to all of them.  
 
 ### [[Project]](https://ybsong00.github.io/cvpr18_tracking/index.html) [[Paper]](https://arxiv.org/pdf/1804.04273.pdf) [[Matlab code]](https://github.com/ybsong00/Vital_release)  
 
